@@ -48,12 +48,13 @@ class ChooseRounds:
                                         bg=btn_color_value[item][0],
                                         text="{} Rounds".format(btn_color_value[item][1]),
                                         font=button_font, width=10,
-                                        command=lambda i=item: self.to_play(btn_color_value[item][1])
+                                        command=lambda i=item: self.to_play(btn_color_value[i][1])
                                         )
             self.rounds_button.grid(row=0, column=item,
                                     padx=5, pady=5)
 
     def to_play(self, num_round):
+        print(num_round)
         Play(num_round)
 
         # Hide root window (ie: hide rounds choice window).

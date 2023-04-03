@@ -8,53 +8,8 @@ import random
 class ChooseRounds:
 
     def __init__(self):
-        button_fg = "#FFFFFF"
-        button_font = ("Ariel", "13", "bold")
-
-        # Set up GUI Frame
-        self.intro_frame = Frame(padx=10, pady=10)
-        self.intro_frame.grid()
-
-        # heading and brief instructions
-        self.intro_heading_label = Label(self.intro_frame,
-                                         text="Colour Quest",
-                                         font=("Ariel", "13", "bold"))
-        self.intro_heading_label.grid(row=0)
-
-        choose_instructions_txt = "In each round you will be given " \
-                                  "six different colours to choose " \
-                                  "from. Pick a colour and see if " \
-                                  "you can beat the computer's " \
-                                  "score!\n\n" \
-                                  "To begin, choose how many rounds " \
-                                  "you'd like to play..."
-        self.choose_instructions_label = Label(self.intro_frame,
-                                               text=choose_instructions_txt,
-                                               wraplength=300,
-                                               justify="left")
-        self.choose_instructions_label.grid(row=1)
-
-        # Rounds buttons...
-        self.how_many_frame = Frame(self.intro_frame)
-        self.how_many_frame.grid(row=2)
-
-        # list to set up rounds button. First item in each
-        # sublist is the background color, second item is
-        # the number of rounds
-        btn_color_value = [
-            ["#CC0000", 3], ["#009900", 5], ["#000099", 10]
-            ]
-
-        for item in range(0, 3):
-            self.rounds_button = Button(self.how_many_frame,
-                                        fg=button_fg,
-                                        bg=btn_color_value[item][0],
-                                        text="{} Rounds".format(btn_color_value[item][1]),
-                                        font=button_font, width=10,
-                                        command=lambda i=item: self.to_play(btn_color_value[i][1])
-                                        )
-            self.rounds_button.grid(row=0, column=item,
-                                    padx=5, pady=5)
+        # invoke play class with three rounds for testing purposes.
+        self.to_play(3)
 
     def to_play(self, num_rounds):
         Play(num_rounds)
@@ -88,8 +43,8 @@ class Play:
         # lists to hold user score/s and computer score/s
         # used to work out statistics
 
-        self.user_scores = []
-        self.computer_scores = []
+        user_scores = []
+        computer_scores = []
 
         # get all the colours for use in game
         self.all_colours = self.get_all_colours()
@@ -149,7 +104,7 @@ class Play:
                                          pady=5)
         self.round_results_label.grid(row=0, column=0, padx=5)
 
-        self.next_button = Button(self.rounds_frame, text="Next Round",
+        self.next_button = Button(self.rounds_frame, text="Round",
                                   fg="#FFFFFF", bg="#008BFC",
                                   font=("Ariel", 11, "bold"),
                                   width=10, state=DISABLED,
@@ -257,7 +212,7 @@ class Play:
 
     # work out who won and if the game is over
     # update win / loss labels and buttons
-    def to_compare(self, user_choice):
+    def to_compare(self, user_score):
 
         how_many = self.rounds_wanted.get()
 
@@ -362,72 +317,11 @@ class Play:
         else:
             self.close_play()
 
-    def get_stats(self):
+    def get_states(self):
         print("You chose to get the statistics")
 
-    def close_play(self):
-        # reshow root (ie: choose rounds) and end current
-        # game / allow new game to start
-        root.deiconify()
-        self.play_box.destroy()
-
-
-# Show users help / game tips
-class DisplayHelp:
-    def __init__(self, partner):
-        # setup dialogue box and background colour
-        background = "#ffe6cc"
-        self.help_box = Toplevel()
-
-        # disable help button
-        partner.to_help_btn.config(state=DISABLED)
-
-        # If users press cross at top, closes help and
-        # 'releases' help button
-        self.help_box.protocol('WM_DELETE_WINDOW',
-                               partial(self.close_help, partner))
-
-        self.help_frame = Frame(self.help_box, width=300,
-                                height=200,
-                                bg=background)
-        self.help_frame.grid()
-
-        self.help_heading_label = Label(self.help_frame,
-                                        bg=background,
-                                        text="Help / Hints",
-                                        font=("Arial", "14", "bold"))
-        self.help_heading_label.grid(row=0)
-
-        help_text = "Your goal in this game is to beat the computer " \
-                    "and you have an advantage - you get to choose " \
-                    "your colour first. The points associated with " \
-                    "the colours are based on the colour's hex code.\n\n" \
-                    "The higher the value of the colour, the greater" \
-                    "your score. To see your statistics, click on " \
-                    "the 'Statistics' button. \n\n" \
-                    "Win the game by scoring more than the computer " \
-                    "overall. Don't be discouraged if you don't win e " \
-                    "round, it's your overall score that counts. \n\n" \
-                    "Good luck! Choose carefully."
-        self.help_text_label = Label(self.help_frame, bg=background,
-                                     text=help_text, wraplength=350,
-                                     justify="left")
-        self.help_text_label.grid(row=1, padx=10)
-
-        self.dismiss_button = Button(self.help_frame,
-                                     font=("Ariel", "12", "bold"),
-                                     text="Dismiss", bg="#CC6600",
-                                     fg="#FFFFFF",
-                                     command=partial(self.close_help,
-                                                     partner))
-        self.dismiss_button.grid(row=2, padx=10, pady=10)
-
-    # closes help dialogue (used by button and x at top of dialogue)
-    def close_help(self, partner):
-        # Put help button back to normal...
-
-        partner.to_help_btn.config(state=NORMAL)
-        self.help_box.destroy()
+    def get_help(self):
+        print("You chose to get help")
 
 
 # main routine
