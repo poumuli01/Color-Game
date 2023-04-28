@@ -63,10 +63,6 @@ class Play:
         else:
             self.close_play()
 
-        # DON'T USE THIS FUNCTION IN BASE AS IT KILLS THE ROOT
-        def close_play(self):
-            root.destroy()
-
 
 # Show users help / game tips
 class DisplayHelp:
